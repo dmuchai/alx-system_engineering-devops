@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+# Loop thro the files in the current directory, ignoring hidden files
+for file in *; do
+    # Check if the item is a file or directory (and not hidden)
+    if [[ -f "$file" || -d "$file" ]]; then
+        # Remove everything up to and including the first dash (if present)
+        echo "${file#*-}"
+    fi
+done
