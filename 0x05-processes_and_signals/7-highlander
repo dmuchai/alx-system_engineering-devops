@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Trap the SIGTERM signal to display a custom message
+
+trap 'echo "I am invincible!!!"' SIGTERM
+while :
+do
+    echo "To infinity and beyond"
+    sleep 2
+done
