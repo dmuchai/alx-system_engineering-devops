@@ -1,28 +1,12 @@
 #!/usr/bin/env bash
-# Redirection 301 Moved Permanently redirecting to another page.
-sudo apt update -y
-sudo apt install -y nginx
+# Script to configure Nginx with a 301 redirection for /redirect_me
 
-# Create a new Nginx server block configuration for the redirection
-sudo tee /etc/nginx/sites-available/redirect_site <<EOF
-server {
-    listen 80;
-    server_name _;
+# Update and install Nginx
+sudo apt-get update -y
+sudo apt-get install -y nginx
 
-    location /redirect_me {
-        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
-    }
-}
-EOF
+# Modify the default Nginx configuration to include the redirection
+sudo sed -i '/server_name _;/a \    location /redirect_me {\n        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;\n    }' /etc/nginx/sites-available/default
 
-# Enable the new site configuration
-sudo ln -s /etc/nginx/sites-available/redirect_site /etc/nginx/sites-enabled/
-
-# Test Nginx configuration for syntax errors
-sudo nginx -t
-
-# Reload Nginx to apply the changes
-sudo service nginx start
-
-# Print success message
-echo "Redirection configured successfully!"
+# Restart Nginx to apply changes
+sudo systemctl reload nginx
