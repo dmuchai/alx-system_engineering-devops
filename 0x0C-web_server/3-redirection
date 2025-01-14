@@ -1,12 +1,9 @@
 #!/usr/bin/env bash
-# Script to configure Nginx with a 301 redirection for /redirect_me
+# Script to configure Nginx with a 301 redirection
 
-# Update and install Nginx
-sudo apt-get update -y
-sudo apt-get install -y nginx
-
-# Modify the default Nginx configuration to include the redirection
-sudo sed -i '/server_name _;/a \    location /redirect_me {\n        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;\n    }' /etc/nginx/sites-available/default
-
-# Restart Nginx to apply changes
-sudo systemctl reload nginx
+apt-get -y update
+apt-get -y install nginx
+service nginx start
+echo "Hello World!" > /var/www/html/index.nginx-debian.html
+sed -i "/server_name _;/ a\\\trewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;" /etc/nginx/sites-available/default
+service nginx restart
