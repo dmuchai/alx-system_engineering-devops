@@ -1,6 +1,5 @@
-#!/bin/bash
-
-# Update and install Nginx if not already installed
+#!/usr/bin/env bash
+# Redirection 301 Moved Permanently redirecting to another page.
 sudo apt update -y
 sudo apt install -y nginx
 
@@ -23,7 +22,7 @@ sudo ln -s /etc/nginx/sites-available/redirect_site /etc/nginx/sites-enabled/
 sudo nginx -t
 
 # Reload Nginx to apply the changes
-sudo systemctl reload nginx
+sudo service nginx start
 
 # Print success message
 echo "Redirection configured successfully!"
