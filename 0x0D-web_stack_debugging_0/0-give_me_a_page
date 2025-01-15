@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+# Script to fix Apache and return a page with "Hello ALX"
+
+apt-get update
+apt-get install -y apache2
+echo "Hello ALX" > /var/www/html/index.html
+service apache2 start
