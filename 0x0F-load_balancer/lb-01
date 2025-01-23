@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+#load balancer 1 log in commands
+ssh -i ~/.ssh/school ubuntu@3.90.81.4
