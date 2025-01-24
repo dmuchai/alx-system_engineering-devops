@@ -1,0 +1,5 @@
+System has not been booted with systemd as init system (PID 1). Can't operate.
+Failed to connect to bus: Host is down
+./0-nginx_likes_port_80: line 15: ufw: command not found
+tcp    LISTEN  0       128            0.0.0.0:80           0.0.0.0:*            
+tcp    LISTEN  0       128               [::]:80              [::]:*            
