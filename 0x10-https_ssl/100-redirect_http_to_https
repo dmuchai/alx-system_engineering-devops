@@ -1,0 +1,44 @@
+# Global settings
+global
+    log /dev/log    local0
+    log /dev/log    local1 notice
+    chroot /var/lib/haproxy
+    stats timeout 30s
+    user haproxy
+    group haproxy
+    daemon
+    tune.ssl.default-dh-param 2048
+    ca-base /etc/ssl/certs
+    crt-base /etc/ssl/private
+    ssl-default-bind-options no-sslv3
+    ssl-default-bind-ciphers HIGH:!aNULL:!MD5
+
+# Default settings
+defaults
+    log     global
+    mode    http
+    option  httplog
+    option  dontlognull
+    retries 3
+    timeout connect 5000ms
+    timeout client  50000ms
+    timeout server  50000ms
+
+# HTTP frontend configuration
+frontend dmuchai_frontend_http
+    bind *:80
+    mode http
+    redirect scheme https if !{ ssl_fc }
+
+# HTTPS frontend configuration
+frontend dmuchai_frontend_https
+    bind *:443 ssl crt /etc/letsencrypt/live/www.dennismuchaisolutions.tech/haproxy.pem
+    mode http
+    default_backend dmuchai_backend
+
+# Backend configuration
+backend dmuchai_backend
+    balance roundrobin
+    mode http
+    server 660190-web-01 34.234.193.82:80 check
+    server 660190-web-02 18.214.89.239:80 check
