@@ -1,0 +1,44 @@
+#!/usr/bin/env bash
+# Function to fetch and display subdomain information
+fetch_subdomain_info() {
+    local domain=$1
+    local subdomain=$2
+
+    # Use dig to fetch DNS record
+    result=$(dig "${subdomain}.${domain}" +short)
+    
+    if [[ -n "$result" ]]; then
+        echo "The subdomain $subdomain is an A record and points to $result"
+    else
+        echo "The subdomain $subdomain does not exist or has no A record."
+    fi
+}
+
+# Main script logic
+main() {
+    local domain=$1
+    local specific_subdomain=$2
+
+    # List of default subdomains
+    subdomains=(www lb-01 web-01 web-02)
+
+    if [[ -z "$specific_subdomain" ]]; then
+        # No specific subdomain provided; display for all default subdomains
+        for sub in "${subdomains[@]}"; do
+            fetch_subdomain_info "$domain" "$sub"
+        done
+    else
+        # Specific subdomain provided; display for that subdomain
+        fetch_subdomain_info "$domain" "$specific_subdomain"
+    fi
+}
+
+# Input validation
+if [[ -z "$1" ]]; then
+    echo "Usage: $0 <domain> [subdomain]"
+    exit 1
+fi
+
+# Execute main function
+main "$1" "$2"
+
