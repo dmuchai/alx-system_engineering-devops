@@ -1,0 +1,19 @@
+#!/bin/bash
+# Configure ufw to allow ports 80 and 8080, then use iptables to forward traffic from 8080 to 80.
+
+# Allow HTTP and the forwarding port (8080)
+ufw allow 80/tcp
+ufw allow 8080/tcp
+
+# Enable IP forwarding
+echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
+sysctl -p
+
+# Add iptables rule to forward port 8080 to 80
+iptables -t nat -A PREROUTING -p tcp --dport 8080 -j REDIRECT --to-port 80
+
+# Save iptables rules to ensure persistence
+iptables-save > /etc/iptables/rules.v4
+
+# Enable ufw
+ufw enable
