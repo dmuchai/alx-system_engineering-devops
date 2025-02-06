@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # Check if a password is passed as an argument
 if [ -z "$1" ]; then
     echo "Please provide the MySQL root password as an argument."
