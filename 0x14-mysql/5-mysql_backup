@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+# Check if a password is passed as an argument
+if [ -z "$1" ]; then
+    echo "Please provide the MySQL root password as an argument."
+    exit 1
+fi
+
+# Assign password from the argument
+MYSQL_PASSWORD=$1
+
+# Get the current date in day-month-year format
+DATE=$(date +\%d-\%m-\%Y)
+
+# Generate MySQL dump and compress it into a tar.gz file
+mysqldump -u root -p"$MYSQL_PASSWORD" --all-databases --single-transaction --quick --lock-tables=false > backup.sql
+
+# Create a tar.gz archive of the backup.sql file
+tar -czf "$DATE.tar.gz" backup.sql
+
+# Clean up by removing the backup.sql file after compression
+rm backup.sql
+
+echo "Backup completed: $DATE.tar.gz"
