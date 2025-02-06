@@ -1,43 +1,4 @@
 #!/usr/bin/env bash
-# Check if a password is passed as an argument
-if [ -z "$1" ]; then
-    echo "Please provide the MySQL root password as an argument."
-    exit 1
-fi
-
-# Assign password from the argument
-MYSQL_PASSWORD=$1
-
-# Get the current date in day-month-year format
-DATE=$(date +\%d-\%m-\%Y)
-
-# Create the MySQL dump
-echo "Generating MySQL dump..."
-mysqldump -u root -p"$MYSQL_PASSWORD" --all-databases --single-transaction --quick --lock-tables=false > backup.sql
-
-# Check if the dump was successful
-if [ $? -ne 0 ]; then
-    echo "Error generating MySQL dump. Please check the credentials and try again."
-    exit 1
-fi
-
-# Verify that the dump file is not empty
-if [ ! -s backup.sql ]; then
-    echo "The MySQL dump file is empty. Aborting backup."
-    exit 1
-fi
-
-# Create a tar.gz archive of the dump file
-echo "Creating tar.gz archive..."
-tar -czf "$DATE.tar.gz" backup.sql
-
-# Check if the tar command was successful
-if [ $? -ne 0 ]; then
-    echo "Error creating the tar.gz archive."
-    exit 1
-fi
-
-# Clean up by removing the backup.sql file after compression
-rm backup.sql
-
-echo "Backup completed successfully: $DATE.tar.gz"
+# A Bash script that generates a MySQL dump and creates a compressed archive out of it.
+mysqldump -u root --all-databases -p"$1" > backup.sql
+tar -czvf "$(date '+%d-%m-%Y').tar.gz" backup.sql
