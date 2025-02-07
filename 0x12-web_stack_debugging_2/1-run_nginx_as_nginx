@@ -18,7 +18,7 @@ sed -i 's/listen \[::\]:80 default_server;/listen \[::\]:8080 default_server;/' 
 service nginx restart
 
 # Verify if Nginx is running as the nginx user
-ps aux | grep '[n]ginx'
+pgrep nginx
 
 # Verify if Nginx is listening on port 8080
 netstat -tulnp | grep ':8080'
