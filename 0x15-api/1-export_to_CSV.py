@@ -37,7 +37,9 @@ if __name__ == "__main__":
         writer = csv.writer(file, quoting=csv.QUOTE_ALL)
 
         # Write CSV header
-        writer.writerow(["USER_ID", "USERNAME", "TASK_COMPLETED_STATUS", "TASK_TITLE"])
+        writer.writerow([
+            "USER_ID", "USERNAME", "TASK_COMPLETED_STATUS", "TASK_TITLE"
+            ])
 
         # Write data rows
         for task in todos_data:
