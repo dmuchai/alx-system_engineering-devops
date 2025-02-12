@@ -40,11 +40,6 @@ if __name__ == "__main__":
     with open("{}.csv".format(employee_id), mode="w", newline="") as file:
         writer = csv.writer(file, quoting=csv.QUOTE_ALL)
 
-        # Write CSV header
-        writer.writerow([
-            "USER_ID", "USERNAME", "TASK_COMPLETED_STATUS", "TASK_TITLE"
-            ])
-
         # Write data rows
         for task in todos_data:
             user_id = task.get("userId")
