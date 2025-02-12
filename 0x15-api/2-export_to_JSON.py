@@ -49,4 +49,3 @@ if __name__ == "__main__":
 
     with open("{}.json".format(employee_id), mode="w") as file:
         json.dump(json_data, file)
-
