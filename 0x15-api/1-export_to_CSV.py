@@ -32,6 +32,10 @@ if __name__ == "__main__":
 
     employee_name = user_data.get("username")
 
+    total_tasks = len(todos_data)
+    done_tasks = [task.get("title") for task in todos_data
+                  if task.get("completed")]
+
     # Open a CSV file for writing
     with open("{}.csv".format(employee_id), mode="w", newline="") as file:
         writer = csv.writer(file, quoting=csv.QUOTE_ALL)
