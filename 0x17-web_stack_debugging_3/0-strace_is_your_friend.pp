@@ -1,6 +1,6 @@
-# Puppet manifest to fix WordPress 500 error
+# Fixes a faulty WordPress site by correcting the .phpp to .php in wp-settings.php
 
 exec { 'fix-wordpress':
-  command => 'chown -R www-data:www-data /var/www/html && chmod -R 755 /var/www/html',
-  path    => ['/bin', '/usr/bin'],
+  command => 'sed -i s/phpp/php/g /var/www/html/wp-settings.php',
+  path    => ['/bin', '/usr/bin/', '/usr/loca/bin/'],
 }
